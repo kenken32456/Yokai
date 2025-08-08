@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yokai Ink</title>
+  <meta name="color-scheme" content="dark light">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <link rel="stylesheet" href="./assets/style.css">
+  <!-- Motion libs -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/bundled/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-zinc-950 text-zinc-100 antialiased transition-colors duration-300" data-theme="dark">
+  <!-- Sticky nav (minimal, top-right controls) -->
+  <header class="fixed top-0 left-0 right-0 z-[60] pointer-events-none">
+    <div class="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
+      <div class="pointer-events-auto flex items-center gap-2">
+        <span class="sr-only">Yokai Ink</span>
+      </div>
+      <div class="pointer-events-auto flex items-center gap-2">
+        <nav class="hidden md:flex items-center gap-6 text-sm opacity-90">
+          <a href="#intro" class="hover:opacity-70">Intro</a>
+          <a href="#portfolio" class="hover:opacity-70">Portfolio</a>
+          <a href="#events" class="hover:opacity-70">Events</a>
+          <a href="#contact" class="hover:opacity-70">Contact</a>
+          <a href="/admin" class="hover:opacity-70">Admin</a>
+        </nav>
+        <button id="themeToggle" class="px-3 py-2 rounded-lg border border-white/20 text-xs">Dark</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky booking button -->
+  <a href="#booking" class="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-[70] px-5 py-2.5 rounded-2xl bg-emerald-400 text-black font-semibold shadow-xl hover:scale-[1.03] transition">
+    Book
+  </a>
+
+  <!-- HERO: full-bleed video + center title -->
+  <section id="intro" class="relative h-[100svh] w-full overflow-hidden">
+    <video class="absolute inset-0 h-full w-full object-cover" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1580136579312-94651dfd596d?q=80&w=1920&auto=format&fit=crop">
+      <source src="https://cdn.coverr.co/videos/coverr-tattoo-artist-1857/1080p.mp4" type="video/mp4">
+    </video>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70"></div>
+    <div class="absolute inset-0 grid place-items-center text-center px-6">
+      <div class="space-y-4 will-change-transform">
+        <div class="inline-flex items-center gap-2 rounded-full px-4 py-2 bg-white/10 backdrop-blur border border-white/20 text-xs tracking-widest uppercase">Yokai Ink</div>
+        <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.05] drop-shadow-[0_10px_30px_rgba(0,0,0,.6)]">
+          Cinematic Tattoos<br class="hidden md:block"/>in Motion
+        </h1>
+        <p class="max-w-xl mx-auto text-zinc-200/90">Scroll to explore. Smooth transitions inspired by blockbuster reveals.</p>
+        <div class="flex items-center justify-center gap-3">
+          <a href="#booking" class="px-5 py-2.5 rounded-2xl bg-emerald-400 text-black font-semibold shadow-lg">Book Now</a>
+          <a href="#portfolio" class="px-5 py-2.5 rounded-2xl border border-white/20">See Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: About (intro left, face right) -->
+  <section class="panel bg-panel" data-panel="about">
+    <div class="mx-auto max-w-7xl px-4 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-5xl font-bold">Introduction</h2>
+        <p class="mt-4 text-zinc-300">I’m <span id="studioName">Yokai Ink</span> — specializing in Japanese, black & grey, and fine-line work. Clean technique. Big storytelling energy.</p>
+        <ul class="mt-6 space-y-2 text-zinc-300 text-sm">
+          <li>• Single-needle & fine-line specialists</li>
+          <li>• Custom designs only — no flash reprints</li>
+          <li>• Strict hygiene & premium inks</li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="aspect-[4/5] w-full rounded-3xl overflow-hidden shadow-2xl bg-zinc-800 parallax">
+          <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?q=80&w=1400&auto=format&fit=crop" alt="Artist face" class="h-full w-full object-cover"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: Portfolio with marquee row -->
+  <section id="portfolio" class="panel bg-panel" data-panel="portfolio">
+    <div class="mx-auto max-w-7xl px-4 py-16 md:py-24">
+      <div class="flex items-end justify-between mb-6 reveal">
+        <h2 class="text-3xl md:text-5xl font-bold">Portfolio</h2>
+        <span class="text-xs opacity-70">Scroll to glide</span>
+      </div>
+      <div id="marquee" class="overflow-hidden rounded-2xl border border-white/10">
+        <div id="marqueeTrack" class="flex gap-3 p-3 will-change-transform"></div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5 mt-6" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- PANEL: Events -->
+  <section id="events" class="panel bg-panel" data-panel="events">
+    <div class="mx-auto max-w-7xl px-4 py-16 md:py-24">
+      <div class="reveal mb-6">
+        <h2 class="text-3xl md:text-5xl font-bold">Events</h2>
+        <p class="text-zinc-300">Conventions, guest spots, promos — managed in admin.</p>
+      </div>
+      <div id="eventsList" class="grid md:grid-cols-2 gap-4"></div>
+    </div>
+  </section>
+
+  <!-- PANEL: Booking (Netlify Forms) -->
+  <section id="booking" class="panel bg-panel" data-panel="booking">
+    <div class="mx-auto max-w-7xl px-4 py-16 md:py-24">
+      <div class="reveal"><h2 class="text-3xl md:text-5xl font-bold mb-2">Booking</h2></div>
+      <div class="glass rounded-2xl p-6 reveal">
+        <form name="booking" method="POST" data-netlify="true" class="grid md:grid-cols-2 gap-4">
+          <input type="hidden" name="form-name" value="booking">
+          <input required name="name" placeholder="Your name" class="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-700" />
+          <input required type="email" name="email" placeholder="Email" class="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-700" />
+          <input name="phone" placeholder="Phone (optional)" class="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-700" />
+          <div class="grid grid-cols-2 gap-4">
+            <input name="size" placeholder="Approx. size (inches/cm)" class="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-700" />
+            <input name="placement" placeholder="Placement (e.g., forearm)" class="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-700" />
+          </div>
+          <div class="md:col-span-2">
+            <textarea required name="description" placeholder="Describe your idea..." class="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-700 min-h-[140px]"></textarea>
+          </div>
+          <div class="md:col-span-2 flex items-center justify-between">
+            <div class="text-xs text-zinc-400">By sending this, you agree to the studio policies.</div>
+            <button type="submit" class="px-4 py-2 rounded-2xl bg-emerald-400 text-black font-semibold">Send request</button>
+          </div>
+        </form>
+        <p class="text-xs text-zinc-500 mt-3">Submissions show in Netlify → Forms. Enable email notifications there.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: Contact -->
+  <section id="contact" class="panel bg-panel" data-panel="contact">
+    <div class="mx-auto max-w-7xl px-4 py-16 md:py-24">
+      <div class="reveal"><h2 class="text-3xl md:text-5xl font-bold mb-2">Contact</h2></div>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass rounded-2xl p-5">📞 <span id="phoneTxt">+1 (555) 123-4567</span></div>
+        <div class="glass rounded-2xl p-5">✉️ <span id="emailTxt">booking@yokaiink.studio</span></div>
+        <a id="igBox" href="#" target="_blank" class="block">
+          <div class="glass rounded-2xl p-5 h-full">📷 Instagram</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-4 py-10 text-sm text-zinc-400 flex flex-col md:flex-row items-center justify-between gap-2">
+      <p>© <span id="year"></span> <span id="footerName">Yokai Ink</span>. All rights reserved.</p>
+      <p><span id="addressTxt">Houston, TX</span></p>
+    </div>
+  </footer>
+
+  <script src="./assets/main.js"></script>
+  <script>
+    function getParam(name){const url=new URL(location.href);const q=url.searchParams.get(name);if(q)return q;const h=new URLSearchParams(location.hash.replace(/^#/,''));return h.get(name);}
+    const invite=getParam('invite_token'); const recovery=getParam('recovery_token');
+    if(window.netlifyIdentity){netlifyIdentity.init();
+      if(invite){netlifyIdentity.acceptInvite(invite,true).then(()=>location.href='/admin/').catch(()=>netlifyIdentity.open('signup'));}
+      if(recovery){netlifyIdentity.open('recovery');}
+      netlifyIdentity.on('login',()=>location.href='/admin/');
+    }
+  </script>
+</body>
+</html>
