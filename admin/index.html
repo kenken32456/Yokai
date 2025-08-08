@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Admin | Yokai Ink</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="https://unpkg.com/decap-cms@^3.3.0/dist/decap-cms.js"></script>
+</head>
+<body>
+  <div id="nc-root"></div>
+  <script>
+    if (window.netlifyIdentity) {
+      netlifyIdentity.on('init', (user) => {
+        if (!user) netlifyIdentity.on('login', () => location.reload());
+      });
+    }
+  </script>
+</body></html>
